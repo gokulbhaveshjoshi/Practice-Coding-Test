@@ -1,5 +1,10 @@
 package pandora;
 
+import pandora.convertor.Days;
+import pandora.convertor.Hours;
+import pandora.convertor.Minutes;
+import pandora.convertor.Month;
+
 public class TimeCalculator {
     private static final int SEC_IN_MIN = 10;
     private static final int MIN_IN_HOUR = 20;
@@ -54,16 +59,16 @@ public class TimeCalculator {
     }
 
     public Time convertSecIntoTime(int seconds) {
-        int month = seconds / (DAY_IN_MONTH * HOUR_IN_DAY * MIN_IN_HOUR * SEC_IN_MIN);
+        int month = new Month().toSeconds(seconds);
         seconds = seconds % (DAY_IN_MONTH * HOUR_IN_DAY * MIN_IN_HOUR * SEC_IN_MIN);
 
-        int days = seconds / ( HOUR_IN_DAY * MIN_IN_HOUR * SEC_IN_MIN);
+        int days = new Days().toSeconds(seconds);
         seconds %= ( HOUR_IN_DAY * MIN_IN_HOUR * SEC_IN_MIN);
 
-        int hours = seconds / ( MIN_IN_HOUR * SEC_IN_MIN);
+        int hours = new Hours().toSeconds(seconds);
         seconds %= ( MIN_IN_HOUR * SEC_IN_MIN);
 
-        int minutes = seconds / SEC_IN_MIN;
+        int minutes = new Minutes().toSeconds(seconds);
         seconds %= SEC_IN_MIN;
 
         Time newTime = new Time(month, days, hours, minutes, seconds);
